@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+/* Palette 60 / 30 / 10 con token semantici nello stile shadcn/ui.
+   60% crema (background), 30% petrolio (foreground, superfici scure), 10% arancio (primary). */
+@theme {
+  --color-background: #efe6da;
+  --color-foreground: #10333d;
+  --color-card: #ffffff;
+  --color-card-foreground: #10333d;
+  --color-primary: #ff5a1e;
+  --color-primary-hover: #e64a14;
+  --color-primary-foreground: #10333d;
+  --color-secondary: #10333d;
+  --color-secondary-foreground: #efe6da;
+  --color-muted: rgba(16, 51, 61, 0.08);
+  --color-muted-foreground: rgba(16, 51, 61, 0.72);
+  --color-border: rgba(16, 51, 61, 0.16);
+  --color-ring: #ff5a1e;
+
+  --font-sans: "Inter", Helvetica, Arial, "Liberation Sans", system-ui, sans-serif;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+  --radius-3xl: 40px;
+  --breakpoint-xs: 30rem;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-spin-ring: spin-ring 26s linear infinite;
+  --animate-accordion-down: accordion-down 0.25s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes spin-ring {
+    from {
+      transform: rotateX(-7deg) rotateY(0deg);
+    }
+    to {
+      transform: rotateX(-7deg) rotateY(360deg);
+    }
+  }
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ring);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Anello 3D dell'hero: le copertine girano come una pellicola. */
+@layer components {
+  .stage {
+    perspective: 1600px;
+  }
+  .ring {
+    transform-style: preserve-3d;
+    transform: rotateX(-7deg);
+  }
+  .ring-item {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 22px;
+    backface-visibility: hidden;
+    transform: rotateY(calc(var(--i) * 90deg)) translateZ(var(--r, 230px));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring {
+      transform: rotateX(-7deg) rotateY(-20deg);
+    }
+  }
+}
