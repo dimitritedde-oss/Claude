@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La Rochelle Studio | Video e foto che fanno vendere</title>
+<title>La Rochelle Studio</title>
 <meta name="description" content="La Rochelle Studio, produzione video e foto a Olbia. Product video, brand corporate, aftermovie, real estate e photography per brand che vogliono risultati.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -405,6 +405,8 @@
           <textarea name="messaggio" required placeholder="Obiettivo, dove pubblicherai il video, scadenza..."></textarea>
         </label>
         <button class="btn btn-primary" type="submit">Richiedi il preventivo gratuito →</button>
+        <p id="lead-status" role="status" style="font-size:.95rem;color:var(--ink)"></p>
+        <button id="lead-copy" class="btn btn-ghost" type="button" hidden>Copia la richiesta</button>
         <p class="small-print">Rispondiamo entro 24 ore lavorative. I tuoi dati servono solo per rispondere alla richiesta.</p>
       </form>
     </div>
@@ -432,19 +434,26 @@
   }), {threshold:.12});
   document.querySelectorAll('.card,.service,.step,.case').forEach(el => { el.classList.add('reveal'); io.observe(el); });
 
-  // lead form: no backend yet, so it opens a prefilled email to the studio
+  // lead form: no backend yet. It builds the request as text the visitor can copy and send to the studio.
   const form = document.getElementById('lead');
+  const status = document.getElementById('lead-status');
+  const copyBtn = document.getElementById('lead-copy');
+  let leadText = '';
   form.addEventListener('submit', e => {
     e.preventDefault();
-    const d = Object.fromEntries(new FormData(form));
     if (!form.checkValidity()) { form.reportValidity(); return; }
-    const body = [
+    const d = Object.fromEntries(new FormData(form));
+    leadText = [
+      `Richiesta preventivo: ${d.servizio}`, '',
       `Nome: ${d.nome}`, `Azienda: ${d.azienda || '-'}`, `Email: ${d.email}`,
-      `Telefono: ${d.telefono || '-'}`, `Servizio: ${d.servizio}`, `Budget: ${d.budget || '-'}`,
-      '', d.messaggio
+      `Telefono: ${d.telefono || '-'}`, `Budget: ${d.budget || '-'}`, '', d.messaggio
     ].join('\n');
-    const subject = encodeURIComponent(`Richiesta preventivo - ${d.servizio}`);
-    location.href = `mailto:info@larochellestudio.it?subject=${subject}&body=${encodeURIComponent(body)}`;
+    status.textContent = 'Richiesta pronta. Copia il testo e inviacelo a info@larochellestudio.it, oppure chiamaci al +39 324 680 9752.';
+    copyBtn.hidden = false;
+  });
+  copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(leadText); copyBtn.textContent = 'Copiato'; }
+    catch (_) { copyBtn.textContent = 'Seleziona e copia manualmente'; }
   });
 </script>
 </body>
