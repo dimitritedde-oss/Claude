@@ -100,6 +100,27 @@
     .bento-hero .tile{min-height:220px}
   }
 
+  /* 3D hero: copertine su un anello che gira, come una pellicola */
+  .hero-3d{margin-top:64px}
+  .stage{position:relative;perspective:1600px;height:460px;display:grid;place-items:center;overflow:hidden}
+  .ring{position:relative;width:300px;height:380px;transform-style:preserve-3d;transform:rotateX(-7deg);animation:spin 26s linear infinite}
+  .stage:hover .ring{animation-play-state:paused}
+  .ring-item{position:absolute;inset:0;border-radius:22px;overflow:hidden;transform:rotateY(calc(var(--i) * 90deg)) translateZ(230px);backface-visibility:hidden;box-shadow:0 30px 60px -30px rgba(16,51,61,.6);background:var(--teal)}
+  .ring-item img{width:100%;height:100%;object-fit:cover;display:block}
+  .ring-item.logo-face{background:#fff;display:grid;place-items:center;padding:44px}
+  .ring-item.logo-face img{object-fit:contain;width:auto;height:auto;max-width:100%;max-height:100%}
+  .ring-item::after{content:"";position:absolute;inset:0;border-radius:22px;box-shadow:inset 0 0 0 1px rgba(239,230,218,.25)}
+  .floor{position:absolute;bottom:18px;left:50%;width:340px;height:56px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(16,51,61,.35),rgba(16,51,61,0))}
+  @keyframes spin{from{transform:rotateX(-7deg) rotateY(0deg)}to{transform:rotateX(-7deg) rotateY(360deg)}}
+  .stats-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;max-width:520px;margin-inline:auto}
+  .stats-row .stat{border-radius:22px;padding:24px 26px;display:flex;flex-direction:column;gap:6px;background:var(--pink);color:var(--teal)}
+  .stats-row .stat strong{font-size:clamp(2.4rem,4vw,3.4rem);font-weight:800;letter-spacing:-.05em;line-height:1}
+  .stats-row .stat span{font-weight:600;font-size:.92rem}
+  .stats-row .dark-stat{background:var(--teal);color:var(--cream)}
+  .stats-row .dark-stat strong{color:var(--pink)}
+  @media (max-width:560px){.stage{height:360px}.ring{width:200px;height:260px}.ring-item{transform:rotateY(calc(var(--i) * 90deg)) translateZ(135px)}.floor{width:230px}}
+  @media (prefers-reduced-motion:reduce){.ring{animation:none;transform:rotateX(-7deg) rotateY(-20deg)}}
+
   /* marquee */
   .marquee{background:var(--pink);color:var(--teal);overflow:hidden;padding:18px 0}
   .marquee-track{display:flex;width:max-content;animation:marq 28s linear infinite}
@@ -119,7 +140,10 @@
   /* services bento */
   .svc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:64px}
   .svc{position:relative;padding:36px;border-radius:var(--radius);background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:14px;text-decoration:none;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background-color .35s}
-  .svc:hover{transform:translateY(-6px);box-shadow:0 26px 50px -26px rgba(16,51,61,.45)}
+  .svc{transform-style:preserve-3d;transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+  .svc:hover{box-shadow:0 34px 60px -30px rgba(16,51,61,.5)}
+  .svc.reveal.in{transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+  .svc .go,.svc h3,.svc .tag{transform:translateZ(24px)}
   .svc:nth-child(1){grid-column:span 4}
   .svc:nth-child(2){grid-column:span 2}
   .svc:nth-child(3){grid-column:span 2}
@@ -261,18 +285,19 @@
         </div>
       </div>
 
-      <div class="bento-hero">
-        <a class="tile big" href="#lavori">
-          <img src="media/cases/copertina-wati.png" alt="Progetto Wati">
-          <div class="cap"><small>Lavoro in evidenza</small>Wati, lancio di prodotto</div>
-        </a>
-        <div class="stat">
-          <span class="small" style="font-weight:700;opacity:.8">Fondati a Olbia</span>
-          <div><strong>2020</strong><br><span>La nostra produzione, dal 2020</span></div>
+      <div class="hero-3d">
+        <div class="stage" aria-label="Lavori selezionati">
+          <div class="ring">
+            <a class="ring-item" style="--i:0" href="#lavori"><img src="media/cases/copertina-wati.png" alt="Wati"></a>
+            <a class="ring-item" style="--i:1" href="#lavori"><img src="media/cases/copertina-pop.png" alt="Pop"></a>
+            <a class="ring-item" style="--i:2" href="#lavori"><img src="media/cases/copertina-il-mattacchione.png" alt="Il Mattacchione"></a>
+            <div class="ring-item logo-face" style="--i:3"><img src="media/logos/logo-hd.png" alt="La Rochelle Studio"></div>
+          </div>
+          <div class="floor" aria-hidden="true"></div>
         </div>
-        <div class="stat dark-stat">
-          <span style="font-weight:700;opacity:.8">Risposta sui preventivi</span>
-          <div><strong>24h</strong><br><span>lavorative, senza impegno</span></div>
+        <div class="stats-row">
+          <div class="stat"><span>Fondati a Olbia</span><strong>2020</strong></div>
+          <div class="stat dark-stat"><span>Risposta sui preventivi</span><strong>24h</strong></div>
         </div>
       </div>
     </div>
@@ -522,6 +547,23 @@
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  // 3D tilt on service cards, follows the pointer; flat when reduced motion is on
+  if (!reduceMotion && window.matchMedia('(hover:hover)').matches) {
+    document.querySelectorAll('.svc').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - .5;
+        const py = (e.clientY - r.top) / r.height - .5;
+        card.style.setProperty('--ry', (px * 8).toFixed(2) + 'deg');
+        card.style.setProperty('--rx', (-py * 8).toFixed(2) + 'deg');
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
   }
 
   // lead form: no backend yet. Builds the request as text the visitor can copy and send to the studio.
