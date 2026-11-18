@@ -1,81 +1,51 @@
+/* Testi e dati presi dal sito originale larochellestudio.it (Home, Portfolio, Contatti). */
+
+export const BRAND = "La Rochelle Studio";
+export const TAGLINE = "We tell your story";
 export const PHONE_LABEL = "+39 324 680 9752";
 export const PHONE_HREF = "tel:+393246809752";
 export const EMAIL = "info@larochellestudio.it";
-export const VIDEO_URL = "https://youtu.be/8QCPyKRfU48";
+export const ADDRESS = "via Seychelles 18A, SpazioHolo, Olbia, 07026";
+export const FOUNDERS = [
+  { name: "Dimitri Tedde", email: "dimitritedde@larochellestudio.it" },
+  { name: "Mirko Decandia", email: "mirkodecandia@larochellestudio.it" },
+];
 
 export const nav = [
-  { href: "#servizi", label: "Servizi" },
-  { href: "#processo", label: "Processo" },
-  { href: "#lavori", label: "Lavori" },
-  { href: "#faq", label: "Domande" },
+  { href: "#studio", n: "01", label: "Studio" },
+  { href: "#lavori", n: "02", label: "Lavori" },
+  { href: "#servizi", n: "03", label: "Servizi" },
+  { href: "#contatti", n: "04", label: "Contatti" },
 ];
 
-export const pains = [
-  {
-    title: "Le immagini non rendono giustizia",
-    text: "Foto amatoriali o video generici non trasmettono la qualità reale di ciò che offri.",
-  },
-  {
-    title: "Il video c'è, ma non porta risultati",
-    text: "Girato senza strategia, senza una call to action e senza pensare a dove verrà pubblicato.",
-  },
-  {
-    title: "Troppi fornitori, zero responsabilità",
-    text: "Regia, riprese, montaggio e grafica sparsi tra persone diverse. Noi gestiamo tutto in un unico flusso.",
-  },
+/* Chi siamo: testo originale, con minimi ritocchi di punteggiatura. */
+export const story = {
+  title: "Siamo appassionati di cinema e produzione video.",
+  paragraphs: [
+    "La Rochelle Studio è un'agenzia di produzione video con sede a Olbia, Sardegna. È stata fondata nel 2020 da Dimitri Tedde e Mirko Decandia, entrambi appassionati di cinema e produzione video. L'agenzia ha rapidamente guadagnato una solida reputazione grazie alla sua abilità nel creare contenuti video di qualità per aziende e privati.",
+    "Dimitri e Mirko hanno iniziato a lavorare insieme molti anni fa, quando hanno deciso di seguire la loro passione per il cinema e iniziare a produrre i primi video clip musicali e cortometraggi. Grazie alla loro esperienza acquisita nel corso degli anni, hanno deciso di creare La Rochelle Studio per offrire servizi di produzione video professionali alle aziende della Sardegna e non solo.",
+    "Il nostro team è composto da professionisti creativi e tecnici, impegnati a fornire i migliori servizi nella realizzazione di video personalizzati per il tuo brand. Siamo appassionati di ciò che facciamo e ci impegniamo a fornire i migliori risultati possibili.",
+  ],
+  closing: "La Rochelle Studio è garanzia di qualità e professionalità per chiunque cerchi servizi di produzione video di alto livello.",
+  timeline: [
+    { when: "Prima", what: "Video clip musicali e cortometraggi" },
+    { when: "2020", what: "Nasce La Rochelle Studio a Olbia" },
+    { when: "Oggi", what: "Video personalizzati per aziende e privati, in Sardegna e non solo" },
+  ],
+};
+
+/* Le sei categorie del portfolio originale sono anche i servizi. */
+export const categories = [
+  { id: "commercial", label: "Commercial", line: "Video commercial in 16:9, pensati per TV e social." },
+  { id: "corporate", label: "Corporate", line: "Ristoranti, aziende e brand, da Il Mattacchione a Mizuna e Novamarine." },
+  { id: "event", label: "Event", line: "Eventi raccontati dal vivo, come Nikki Beach e SNO." },
+  { id: "wedding", label: "Wedding", line: "Storie di matrimonio, come Ann & Alessandro e Stefania & Fabio." },
+  { id: "real-estate", label: "Real estate", line: "Ville e proprietà della Costa Smeralda." },
+  { id: "photography", label: "Photography", line: "Nautica, food, moda, eventi, tradizioni e artigianato. Firmato Janthima Verri." },
 ];
 
-export const services = [
-  {
-    tag: "Product video",
-    title: "Video prodotto che fanno acquistare",
-    featured: true,
-    span: "md:col-span-4",
-    points: [
-      "Lancio di prodotto e demo pratiche",
-      "Versioni pronte per Instagram, TikTok, sito ed e-commerce",
-      "Script orientato alla conversione",
-    ],
-  },
-  {
-    tag: "Brand corporate",
-    title: "Video aziendali che costruiscono fiducia",
-    span: "md:col-span-2",
-    points: [
-      "Presentazione dell'azienda e dei valori",
-      "Interviste a dipendenti e fondatori",
-      "Materiale per recruiting e investitori",
-    ],
-  },
-  {
-    tag: "Real estate",
-    title: "Video immobiliari che accorciano le trattative",
-    span: "md:col-span-2",
-    points: ["Tour cinematografici di ville, hotel e immobili", "Ideali per annunci, portali e agenzie"],
-  },
-  {
-    tag: "Aftermovie",
-    title: "Eventi che si ricordano e si rivendono",
-    span: "md:col-span-2",
-    points: ["Riprese dietro le quinte e highlight", "Racconto di artisti e performer"],
-  },
-  {
-    tag: "Photography",
-    title: "Foto per matrimoni, immobili, eventi e sessioni commerciali",
-    span: "md:col-span-4",
-    points: [
-      "Servizi fotografici per aziende, brand e privati",
-      "Stile coerente con il video, così il tuo brand è uno solo",
-    ],
-  },
-];
-
-export const steps = [
-  { title: "Brief", text: "Ci racconti obiettivo, pubblico e budget in una call di 20 minuti." },
-  { title: "Proposta", text: "Ricevi un preventivo chiaro con cosa è incluso e i tempi di consegna." },
-  { title: "Produzione", text: "Riprese e regia del nostro team, con te coinvolto nelle decisioni chiave." },
-  { title: "Consegna", text: "Video montato, colorato e adattato ai formati dei tuoi canali." },
-];
+/* Home originale: "Lavori selezionati, storie che hanno un obiettivo". */
+export const selectedTitles = ["wati", "birra baladin", "Ristorante Il Mattacchione"];
 
 export const clients = [
   ["nikki-beach", "Nikki Beach"],
@@ -95,42 +65,11 @@ export const clients = [
   ["sno", "SNO"],
 ].map(([file, name]) => ({ src: `media/clients/${file}.png`, name }));
 
-export const cases = [
-  { src: "media/cases/copertina-wati.png", name: "Wati", kind: "Lifestyle · Brand" },
-  { src: "media/cases/copertina-pop.png", name: "Pop", kind: "Product · Lancio" },
-  { src: "media/cases/copertina-il-mattacchione.png", name: "Il Mattacchione", kind: "Hospitality · Aftermovie" },
-];
+/* Contatti: testo originale. */
+export const contact = {
+  eyebrow: "Siamo a tua disposizione",
+  title: "Raccontaci la tua idea!",
+  text: "Siamo qui per aiutarti a trasformarla in realtà con la nostra esperienza. Insieme possiamo creare il tuo video perfetto, personalizzato su misura per le tue esigenze. Contattaci e scopri come possiamo lavorare insieme.",
+};
 
-export const faqs = [
-  {
-    q: "Quanto costa un video?",
-    a: "Dipende da durata, numero di riprese, location e tipo di post-produzione. Dopo una call di brief ti inviamo un preventivo chiaro con tutto incluso.",
-  },
-  {
-    q: "Lavorate solo in Sardegna?",
-    a: "La base è a Olbia, ma lavoriamo in tutta Italia per progetti di brand, eventi e immobili.",
-  },
-  {
-    q: "Quanto tempo serve per avere il video?",
-    a: "Dipende dalla complessità. Nel preventivo indichiamo tempi di produzione e consegna precisi.",
-  },
-  {
-    q: "Posso avere più formati (verticale, orizzontale, quadrato)?",
-    a: "Sì. Consegniamo i formati più adatti ai canali su cui pubblicherai: Reels, TikTok, YouTube, sito e annunci.",
-  },
-  {
-    q: "Vi occupate anche della strategia e dello script?",
-    a: "Sì. Possiamo aiutarti a definire messaggio, struttura e call to action prima di girare.",
-  },
-];
-
-export const serviceOptions = [
-  "Product video",
-  "Brand corporate",
-  "Real estate",
-  "Aftermovie",
-  "Photography",
-  "Non so ancora, aiutatemi",
-];
-
-export const budgetOptions = ["Fino a 1.000 €", "1.000 – 3.000 €", "3.000 – 6.000 €", "Oltre 6.000 €"];
+export const serviceOptions = [...categories.map((c) => c.label), "Non so ancora, aiutatemi"];
