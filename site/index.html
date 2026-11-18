@@ -131,9 +131,14 @@
   /* clients */
   .clients{background:var(--color-surface);padding:64px 0;border-block:2px solid var(--color-border)}
   .clients p.label{text-align:center;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:28px;color:var(--color-muted-text)}
-  .logos{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 0}
-  .logos span{font-family:var(--font-display);font-weight:900;font-size:1.25rem;text-transform:uppercase;color:var(--color-foreground);padding:10px 28px;border-right:2px solid var(--color-border)}
-  .logos span:last-child{border-right:none}
+  .logo-wall{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:var(--color-border);border:2px solid var(--color-border)}
+  @media (max-width:900px){.logo-wall{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:520px){.logo-wall{grid-template-columns:repeat(2,1fr)}.logo-wall .tile{height:96px}}
+  .logo-wall .tile{background:#fff;height:120px;display:grid;place-items:center;padding:18px}
+  .logo-wall img{max-height:72px;max-width:100%;width:auto;height:auto;object-fit:contain}
+  .logo-tile{display:inline-grid;background:#fff;padding:10px}
+  .logo-tile img{width:110px;height:110px;object-fit:contain}
+  .case{background-size:cover;background-position:center}
 
   /* cases */
   .cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;border:2px solid var(--color-border)}
@@ -227,7 +232,8 @@
       <p class="lead">Aiutiamo brand, aziende e proprietà immobiliari a mostrare il valore di ciò che vendono, con immagini che convincono e una produzione gestita dall'idea alla consegna.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="#contatti">Richiedi un preventivo gratuito →</a>
-        <a class="btn btn-ghost" href="#lavori">Guarda i lavori</a>
+        <a class="btn btn-ghost" href="https://youtu.be/8QCPyKRfU48" target="_blank" rel="noopener">▶ Guarda il video</a>
+        <a class="btn btn-ghost" href="#lavori">Vedi i lavori</a>
       </div>
       <div class="proof-line">
         <div><strong>2020</strong><span>fondati a Olbia</span></div>
@@ -337,8 +343,22 @@
   <div class="clients">
     <div class="wrap">
       <p class="label">Hanno scelto La Rochelle Studio</p>
-      <div class="logos">
-        <span>Nikki Beach</span><span>Siddura</span><span>Tenuta Asinara</span><span>Highfield</span><span>Mizuma</span><span>Il Mattacchione</span>
+      <div class="logo-wall">
+        <span class="tile"><img src="media/clients/nikki-beach.png" alt="Nikki Beach" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/siddura.png" alt="Siddura" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/tenuta-asinara.png" alt="Tenuta Asinara" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/highfield.png" alt="Highfield" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/mizuma.png" alt="Mizuma" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/il-mattacchione.png" alt="Il Mattacchione" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/alise.png" alt="Alise" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/amalia.png" alt="Amalia" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/bresca-dorada.png" alt="Bresca Dorada" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/macchia-mediterranea.png" alt="Macchia Mediterranea" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/novamarine.png" alt="Novamarine" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/nss.png" alt="NSS" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/rena41.png" alt="Rena41" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/robymarton.png" alt="Robymarton" loading="lazy"></span>
+        <span class="tile"><img src="media/clients/sno.png" alt="SNO" loading="lazy"></span>
       </div>
     </div>
   </div>
@@ -350,9 +370,9 @@
       <h2>Storie che hanno un obiettivo.</h2>
       <p class="lead">Ogni lavoro nasce da una domanda: cosa deve fare questo video per il cliente?</p>
       <div class="cases-grid">
-        <a class="case" href="#contatti" style="--c1:#2563EB;--c2:#0F172A"><div><small>Lifestyle · Brand</small><h3>Wati</h3></div></a>
-        <a class="case" href="#contatti" style="--c1:#EC4899;--c2:#0F172A"><div><small>Product · Lancio</small><h3>Pop</h3></div></a>
-        <a class="case" href="#contatti" style="--c1:#DFE104;--c2:#1E1B4B"><div><small>Hospitality · Aftermovie</small><h3>Il Mattacchione</h3></div></a>
+        <a class="case" href="#contatti" style="background-image:url(media/cases/copertina-wati.png)"><div><small>Lifestyle · Brand</small><h3>Wati</h3></div></a>
+        <a class="case" href="#contatti" style="background-image:url(media/cases/copertina-pop.png)"><div><small>Product · Lancio</small><h3>Pop</h3></div></a>
+        <a class="case" href="#contatti" style="background-image:url(media/cases/copertina-il-mattacchione.png)"><div><small>Hospitality · Aftermovie</small><h3>Il Mattacchione</h3></div></a>
       </div>
       <p class="small-print" style="margin-top:18px">Le miniature sono segnaposto: sostituiscile con i frame reali dei progetti.</p>
     </div>
@@ -443,6 +463,7 @@
 
 <footer>
   <div class="wrap">
+    <span class="logo-tile"><img src="media/logos/logo-hd.png" alt="La Rochelle Studio"></span>
     <span>© 2020–2026 La Rochelle Studio · Olbia, Sardegna</span>
     <span>info@larochellestudio.it · +39 324 680 9752</span>
   </div>
