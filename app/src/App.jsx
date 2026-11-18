@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./components/ui/accordion";
 import { Input, Label, Select, Textarea } from "./components/ui/form-controls";
 import { cn } from "./lib/utils";
+import HeroScene from "./components/HeroScene";
+import { Cursor, ScrollProgress, useMagnetic } from "./components/Cursor";
 import {
   EMAIL,
   PHONE_HREF,
@@ -88,7 +90,7 @@ function Header() {
       <nav
         aria-label="Principale"
         className={cn(
-          "pointer-events-auto mx-auto flex w-[calc(100%-40px)] max-w-[1240px] items-center justify-between gap-6 rounded-full border border-border bg-background/75 py-2.5 pr-2.5 pl-6 backdrop-blur-md transition-shadow duration-300",
+          "pointer-events-auto mx-auto flex w-[calc(100%-40px)] max-w-[1240px] items-center justify-between gap-6 rounded-full border border-border bg-background/95 py-2.5 pr-2.5 pl-6 backdrop-blur-md transition-shadow duration-300",
           scrolled && "shadow-[0_10px_30px_-12px_rgba(16,51,61,0.35)]"
         )}
       >
@@ -155,18 +157,26 @@ function ReelRing() {
 }
 
 function Hero() {
+  const [fallback, setFallback] = useState(false);
+  const labelRef = useRef(null);
+  const panels = useMemo(
+    () => [
+      ...cases.map((c) => ({ src: c.src, name: c.name })),
+      { src: "media/logos/logo-hd.png", name: "La Rochelle Studio", contain: true },
+    ],
+    []
+  );
   return (
-    <section className="pt-32 pb-24 sm:pt-44 sm:pb-28">
-      <Container>
-        <div className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12">
+    <section className="relative isolate overflow-hidden bg-secondary text-secondary-foreground">
+      <div className="grid-bg absolute inset-0 -z-10" aria-hidden="true" />
+      <Container className="pt-32 pb-20 sm:pt-40 sm:pb-24">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
           <div>
             <Kicker>Produzione video e foto · Olbia</Kicker>
-            <h1 className="text-[clamp(3rem,8.4vw,7.4rem)] font-extrabold">
+            <h1 className="text-[clamp(2.8rem,6.6vw,6rem)] font-extrabold">
               Video che <em className="text-primary not-italic">portano clienti</em>, non solo visualizzazioni.
             </h1>
-          </div>
-          <div>
-            <p className="max-w-[600px] text-[clamp(1.05rem,1.4vw,1.25rem)] text-muted-foreground">
+            <p className="mt-7 max-w-[560px] text-[clamp(1.05rem,1.4vw,1.2rem)] text-secondary-foreground/80">
               Aiutiamo brand, aziende e proprietà immobiliari a mostrare il valore di ciò che vendono, con immagini che
               convincono e una produzione gestita dall'idea alla consegna.
             </p>
@@ -176,26 +186,43 @@ function Hero() {
                   Preventivo gratuito <ArrowRight className="size-5" aria-hidden="true" />
                 </a>
               </Button>
-              <Button asChild variant="outline">
-                <a href={VIDEO_URL} target="_blank" rel="noopener">
+              <Button asChild variant="outline-light">
+                <a href={VIDEO_URL} target="_blank" rel="noopener" data-cursor="Play">
                   <Play className="size-4 fill-current" aria-hidden="true" /> Guarda il video
                 </a>
               </Button>
             </div>
           </div>
+
+          <div className="relative h-[380px] sm:h-[480px] lg:h-[560px]">
+            {fallback ? (
+              <div className="grid h-full place-items-center">
+                <ReelRing />
+              </div>
+            ) : (
+              <HeroScene panels={panels} labelRef={labelRef} onUnavailable={() => setFallback(true)} />
+            )}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+              <span className="absolute top-2 left-2 size-5 border-t-2 border-l-2 border-primary" />
+              <span className="absolute top-2 right-2 size-5 border-t-2 border-r-2 border-primary" />
+              <span className="absolute bottom-2 left-2 size-5 border-b-2 border-l-2 border-primary" />
+              <span className="absolute right-2 bottom-2 size-5 border-r-2 border-b-2 border-primary" />
+              <div className="absolute inset-x-6 bottom-5 flex items-center justify-between text-[11px] font-semibold tracking-[0.14em] text-secondary-foreground/70 uppercase">
+                <span ref={labelRef}>01 / 04 · Wati</span>
+                <span className="hidden sm:inline">Muovi il cursore</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-16">
-          <ReelRing />
-          <div className="mx-auto mt-2 grid max-w-[520px] grid-cols-2 gap-3.5">
-            <div className="flex flex-col gap-1.5 rounded-xl bg-primary p-6 text-primary-foreground">
-              <span className="text-sm font-semibold">Fondati a Olbia</span>
-              <strong className="text-[clamp(2.4rem,4vw,3.4rem)] leading-none font-extrabold tracking-tighter">2020</strong>
-            </div>
-            <div className="flex flex-col gap-1.5 rounded-xl bg-secondary p-6 text-secondary-foreground">
-              <span className="text-sm font-semibold">Risposta sui preventivi</span>
-              <strong className="text-[clamp(2.4rem,4vw,3.4rem)] leading-none font-extrabold tracking-tighter text-primary">24h</strong>
-            </div>
+        <div className="mt-14 grid max-w-[520px] grid-cols-2 gap-3.5">
+          <div className="flex flex-col gap-1.5 rounded-xl bg-primary p-6 text-primary-foreground">
+            <span className="text-sm font-semibold">Fondati a Olbia</span>
+            <strong className="text-[clamp(2.4rem,4vw,3.4rem)] leading-none font-extrabold tracking-tighter">2020</strong>
+          </div>
+          <div className="flex flex-col gap-1.5 rounded-xl border border-secondary-foreground/25 p-6 text-secondary-foreground">
+            <span className="text-sm font-semibold opacity-80">Risposta sui preventivi</span>
+            <strong className="text-[clamp(2.4rem,4vw,3.4rem)] leading-none font-extrabold tracking-tighter text-primary">24h</strong>
           </div>
         </div>
       </Container>
@@ -268,22 +295,35 @@ function TiltCard({ className, children, ...props }) {
     () => typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches && !prefersReducedMotion(),
     []
   );
-  const [t, setT] = useState({ rx: 0, ry: 0 });
+  // CSS variables are written straight to the element: no React re-render per pointer move.
   const onMove = (e) => {
     if (!canTilt) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    setT({ ry: px * 8, rx: -py * 8 });
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    el.style.setProperty("--ry", `${((px - 0.5) * 8).toFixed(2)}deg`);
+    el.style.setProperty("--rx", `${(-(py - 0.5) * 8).toFixed(2)}deg`);
+    el.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+    el.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+  };
+  const onLeave = (e) => {
+    e.currentTarget.style.setProperty("--rx", "0deg");
+    e.currentTarget.style.setProperty("--ry", "0deg");
   };
   return (
     <a
       onPointerMove={onMove}
-      onPointerLeave={() => setT({ rx: 0, ry: 0 })}
-      style={{ transform: `perspective(1000px) rotateX(${t.rx}deg) rotateY(${t.ry}deg)`, transformStyle: "preserve-3d" }}
-      className={cn("transition-[transform,box-shadow] duration-300 ease-out-soft", className)}
+      onPointerLeave={onLeave}
+      style={{ transform: "perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))", transformStyle: "preserve-3d" }}
+      className={cn("group transition-[transform,box-shadow] duration-300 ease-out-soft", className)}
       {...props}
     >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background: "radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,90,30,0.16), transparent 45%)" }}
+      />
       {children}
     </a>
   );
@@ -308,6 +348,7 @@ function Services() {
             <Reveal key={s.tag} className={s.span}>
               <TiltCard
                 href="#contatti"
+                data-cursor="Preventivo"
                 className={cn(
                   "relative flex h-full flex-col gap-3.5 rounded-2xl border p-9 hover:shadow-[0_34px_60px_-30px_rgba(16,51,61,0.5)]",
                   s.featured
@@ -411,6 +452,7 @@ function Cases() {
             <Reveal key={c.name} className={i === 0 ? "sm:col-span-2 lg:col-span-1" : ""}>
               <a
                 href="#contatti"
+                data-cursor="Vedi"
                 className="group relative block aspect-square overflow-hidden rounded-2xl bg-secondary text-secondary-foreground hover:ring-4 hover:ring-primary"
               >
                 <img
@@ -669,8 +711,11 @@ function StickyCta() {
 }
 
 export default function App() {
+  useMagnetic();
   return (
     <>
+      <ScrollProgress />
+      <Cursor />
       <Header />
       <main className="pb-0 max-sm:pb-20">
         <Hero />
